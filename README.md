@@ -1,0 +1,2 @@
+# GitRepository
+本示例是一个关于Django的投票应用
