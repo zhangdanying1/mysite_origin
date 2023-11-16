@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{% extends "base.html"  %}
+{% block title %}detail_title{% endblock %}
+
+{% block body %}
 <body>
-<h1>{{ question.question_text }}</h1>
 <ul>
 <form action="{% url 'polls:vote' question.id %}" method="post">
 {% csrf_token %}
@@ -21,4 +18,4 @@
 </form>
 </ul>
 </body>
-</html>
+{% endblock %}
