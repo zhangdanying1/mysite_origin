@@ -4,28 +4,9 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="SHORTCUT ICON" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     {% block link %}{% endblock %}
-    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
-    <style>
-        header{
-            background-color: #333;
-            color: white;
-            border-bottom: 1px solid black;
-            padding: 10px;
-            text-align: center;
-        }
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-
-    </style>
 </head>
 
 <div>
