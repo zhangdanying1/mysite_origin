@@ -13,6 +13,20 @@
     <header>公正投票</header>
 </div>
 
+{% if user.is_authenticated %}
+<span > Hello,{{ user.username }}</span>
+{% else %}
+<span > Hello, 陌生人，您未登录 </span>
+<br>
+<a href="{% url 'polls:index' %}">不想登录或注册，随便看看</a>
+{% endif %}
+
+<br><br>
+<a href="{% url 'user:register' %}">注册</a>
+
+<a href="{% url 'user:login' %}">登录</a>
+<a href="{% url 'user:logout' %}">退出登录</a>
+
 {% block body %}{% endblock %}
 
 <div>
