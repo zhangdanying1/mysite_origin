@@ -4,17 +4,15 @@
 {% block title %}index_title{% endblock %}
 <!--{% block link %}<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">{% endblock %}-->
 
-{% block body %}
-<body>
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <!--<li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>-->
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
-</body>
+{% block js %}
+ {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
+     <script>
+        $.endlessPaginate({
+            paginateOnScroll: true,
+            paginateOnScrollMargin: 20
+        });
+    </script>
+{% include page_template %}
 {% endblock %}

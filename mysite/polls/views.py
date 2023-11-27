@@ -6,13 +6,16 @@ from django.utils import timezone
 from .models import Choice, Question
 from django.contrib.auth.decorators import login_required
 
-class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
-
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+def entry_list(request,
+    template='polls/index.html',
+    page_template='polls/index_page.html'):
+    context = {
+        'entry_list': Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date'),
+        'page_template': page_template,
+    }
+    if request.is_ajax():
+        template = page_template
+    return render(request, template, context)
 
 
 class DetailView(generic.DetailView):
