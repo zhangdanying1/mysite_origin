@@ -15,7 +15,7 @@
             {% endfor %}
         {% endif %}
 
-        {% if userLogin %}
+        {% if user_login %}
             <h1>用户登录</h1>
         {% else %}
             <h1>用户注册</h1>
@@ -27,7 +27,7 @@
             {% csrf_token %}
             <div>用户名:{{ user.username }}</div>
             <div>密  码:{{ user.password1 }}</div>
-             {% if not userLogin %}
+             {% if not user_login %}
             <div>密码确认:{{ user.password2 }}</div>
             <div>(选填)邮  箱:{{ user.email }}</div>
             <div>(选填)手机号:{{ user.mobile }}</div>

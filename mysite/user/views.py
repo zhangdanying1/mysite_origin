@@ -5,24 +5,22 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
 # 使用表单实现用户注册
-def registerView(request):
+def register(request):
     if request.method == 'POST':
         user = MyUserCreationForm(request.POST)
         if user.is_valid():
             user.save()
-            tips = '注册成功'
             messages.success(request, '注册完了马上来登录吧！')
             return redirect(reverse('user:login'))
         else:
             tips = '注册失败'
     user = MyUserCreationForm()
-    return render(request, 'user/user.html', locals())
-
+    return render(request, 'user/user.html', tips, messages, user)
 
 # 用户登录
-def loginView(request):
+def login(request):
     tips = '请登录, 才能投票'
-    userLogin = True
+    user_login = True
     if request.method == 'POST':
         u = request.POST.get('username', '')
         p = request.POST.get('password1', '')
@@ -38,10 +36,9 @@ def loginView(request):
         else:
             tips = '用户不存在，请注册'
     user = MyUserCreationForm()
-    return render(request, 'user/user.html', locals())
-
+    return render(request, 'user/user.html', user_login, messages, tips, user)
 
 # 退出登录
-def logoutView(request):
+def logout(request):
     logout(request)
     return redirect(reverse('user:login'))
