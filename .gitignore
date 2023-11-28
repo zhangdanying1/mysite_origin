@@ -34,6 +34,7 @@
 .idea
 mysite/*/__pycache__
 mysite/*/migrations
+mysite/*/local_settings.py
 mysite/db.sqlite3
 venv
 cmake-build-debug
