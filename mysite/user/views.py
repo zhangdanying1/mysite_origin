@@ -17,7 +17,11 @@ def register(request):
         else:
             tips = '注册失败'
     user = MyUserCreationForm()
-    return render(request, 'user/user.html', tips, messages, user)
+    return render(request, 'user/user.html', {
+        'tips': tips,
+        # 'messages': messages,
+        'user': user
+    })
 
 
 # 用户登录
@@ -39,7 +43,12 @@ def login_re(request):
         else:
             tips = '用户不存在，请注册'
     user = MyUserCreationForm()
-    return render(request, 'user/user.html', user_login, messages, tips, user)
+    return render(request, 'user/user.html', {
+        'tips': tips,
+        'user_login':  user_login,
+        # 'messages': messages,
+        'user': user
+    })
 
 
 # 退出登录
