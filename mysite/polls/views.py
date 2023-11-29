@@ -6,9 +6,8 @@ from django.utils import timezone
 from .models import Choice, Question
 from django.contrib.auth.decorators import login_required
 
-def entry_list(request,
-    template='polls/index.html',
-    page_template='polls/index_page.html'):
+
+def entry_list(request, template='polls/index.html', page_template='polls/index_page.html'):
     context = {
         'entry_list': Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date'),
         'page_template': page_template,

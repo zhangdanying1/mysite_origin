@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-#命名空间方法2 app_name = 'polls'
+# 命名空间方法2 app_name = 'polls'
 urlpatterns = [
     path('', views.entry_list, name='index'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),

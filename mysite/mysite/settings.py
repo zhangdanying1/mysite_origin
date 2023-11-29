@@ -9,24 +9,18 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-from oscar.defaults import *
-from oscar import INSTALLED_APPS as OSCAR_APPS
 import os
-# Path helper
-location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), x)
-
 from pathlib import Path
+from oscar.defaults import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-'''
-    Setting your own SECRET_KEY 
-'''
+# Setting your own SECRET_KEY
 # SECURITY WARNING: keep the secret key used in production secret!
 
 
@@ -46,12 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'bookstore'
+    # 'bookstore',
     'polls',
     'user',
     'el_pagination',
 
-     'django.contrib.sites',
+    'django.contrib.sites',
     'django.contrib.flatpages',
 
     'oscar',
@@ -110,7 +104,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,10 +124,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
-'''
-    Setting your own Database 
-'''
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# setting your own Database
 
 # DATABASES = {
 #     'default': {
@@ -180,7 +172,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR /'static']
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -202,6 +194,6 @@ HAYSTACK_CONNECTIONS = {
 }
 
 try:
-    from mysite.mysite.local_settings import *
+    from .local_settings import *
 except Exception as e:
     print(f'Import local settings error:{e}')

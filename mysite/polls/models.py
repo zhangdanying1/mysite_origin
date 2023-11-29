@@ -3,6 +3,7 @@ from django.utils import timezone
 import datetime
 from django.contrib import admin
 
+
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
@@ -20,7 +21,7 @@ class Question(models.Model):
         # bug 未发布也会返回True (delta的后半段)
         # return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
         now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+        return (now - datetime.timedelta(days=1)).timestamp() <= self.pub_date <= now
 
 
 class Choice(models.Model):
@@ -30,4 +31,3 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
-

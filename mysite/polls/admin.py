@@ -1,9 +1,10 @@
 from django.contrib import admin
 
-from .models import Question,Choice
+from .models import Question, Choice
+
 
 # class ChoiceInline(admin.StackedInline):
-class ChoiceInline(admin.TabularInline): # 更优雅地显示选项
+class ChoiceInline(admin.TabularInline):  # 更优雅地显示选项
     model = Choice
     extra = 3
 

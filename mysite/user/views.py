@@ -4,8 +4,10 @@ from .form import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
+
 # 使用表单实现用户注册
 def register(request):
+    tips = None
     if request.method == 'POST':
         user = MyUserCreationForm(request.POST)
         if user.is_valid():
@@ -17,8 +19,9 @@ def register(request):
     user = MyUserCreationForm()
     return render(request, 'user/user.html', tips, messages, user)
 
+
 # 用户登录
-def login(request):
+def login_re(request):
     tips = '请登录, 才能投票'
     user_login = True
     if request.method == 'POST':
@@ -38,7 +41,8 @@ def login(request):
     user = MyUserCreationForm()
     return render(request, 'user/user.html', user_login, messages, tips, user)
 
+
 # 退出登录
-def logout(request):
+def logout_re(request):
     logout(request)
     return redirect(reverse('user:login'))

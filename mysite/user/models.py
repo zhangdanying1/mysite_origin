@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class MyUser(AbstractUser):
     qq = models.CharField('QQ号码', max_length=16, blank=True, null=True)
     weChat = models.CharField('微信账号', max_length=100, blank=True, null=True)
@@ -10,4 +11,3 @@ class MyUser(AbstractUser):
     # 设置返回值
     def __str__(self):
         return self.username
-

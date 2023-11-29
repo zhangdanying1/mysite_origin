@@ -3,7 +3,7 @@
 
 {% block body %}
 <body>
-<ul>
+
 <form action="{% url 'polls:vote' question.id %}" method="post">
 {% csrf_token %}
 <fieldset>
@@ -16,6 +16,6 @@
 </fieldset>
 <input type="submit" value="Vote">
 </form>
-</ul>
+
 </body>
 {% endblock %}
