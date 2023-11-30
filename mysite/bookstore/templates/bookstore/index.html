@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-{{name}}
+ {% for img in image_list  %}
+    <img src="{{ img.original.url }}"  width="80" height="80"><br>
+    <span>作品: {{img.product}}</span><br>
+    <span>作者: {{img.product.description|striptags}}</span><br>
+    <span>分类: {{img.product.product_class}}</span>
+     <br><br><br>
+ {% endfor %}
 </body>
 </html>

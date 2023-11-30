@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from oscar.core.loading import get_model
 
-Product = get_model('catalogue', 'Product')
+ProductImage = get_model('catalogue', 'ProductImage')
 
 
-def product_display(request, book_id):
-    product_list = Product.objects.get(id=book_id)
-    name = product_list.title
-    return render(request, 'bookstore/index.html', {'name': name})
+def product_display(request):
+    image_list = ProductImage.objects.order_by('product_id', '-date_created').distinct('product_id')
+    return render(request, 'bookstore/index.html', {'image_list': image_list})
