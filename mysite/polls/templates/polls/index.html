@@ -3,6 +3,14 @@
 
 {% block title %}index_title{% endblock %}
 
+{% block body %}
+    {% if messages %}
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
 {% block js %}
  {{ block.super }}
     <script src="http://code.jquery.com/jquery-latest.js"></script>

@@ -14,18 +14,20 @@
 </div>
 
 {% if user.is_authenticated %}
-<span > Hello,{{ user.username }}</span>
+    <span> Hello,{{ user.username }}已登录</span>
+    <br>
+    <a href="{% url 'user:logout' %}">退出登录</a>
+    <br>
+    <a href="{% url 'user:change_password' %}">修改密码</a>
 {% else %}
-<span > Hello, 陌生人，您未登录 </span>
-<br>
-<a href="{% url 'polls:index' %}">不想登录或注册，随便看看</a>
+    <span > Hello, 陌生人，您未登录 </span>
+    <a href="{% url 'user:login' %}">点这里登录</a>
+    <br>
+    <a href="{% url 'polls:index' %}">不想登录或注册，随便看看</a>
 {% endif %}
 
-<br><br>
-<a href="{% url 'user:register' %}">注册</a>
-
-<a href="{% url 'user:login' %}">登录</a>
-<a href="{% url 'user:logout' %}">退出登录</a>
+<br>
+<a href="{% url 'user:register' %}">注册</a> <br>
 
 {% block body %}{% endblock %}
 {% block js %}{% endblock %}
