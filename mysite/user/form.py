@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import MyUser
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 
 
 class MyUserCreationForm(UserCreationForm):
@@ -35,3 +35,11 @@ class MyPasswordChangeForm(PasswordChangeForm):
         if self.user.check_password(new_password1):
             raise ValidationError("New password cannot be the same as the old one")
         return new_password1
+
+
+class MyPasswordResetForm(PasswordResetForm):
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not MyUser.objects.filter(email=email).exists():
+            raise ValidationError('Email not Exist')
+        return email

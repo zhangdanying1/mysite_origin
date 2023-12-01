@@ -197,6 +197,14 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+# 邮件配置信息
+# EMAIL_USE_SSL = True
+# EMAIL_HOST = '######'
+# EMAIL_PORT = 465
+# EMAIL_HOST_USER = '######'
+# EMAIL_HOST_PASSWORD = '######'
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 try:
     from .local_settings import *
 except Exception as e:

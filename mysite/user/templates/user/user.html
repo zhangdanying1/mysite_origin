@@ -10,7 +10,12 @@
     <div class="flex-center">
     <div class="unit-1-2 unit-1-on-mobile">
         {% if user_login %}
-            <h1>用户登录</h1>
+            <div><h1>用户登录</h1>
+            {% if messages %}
+                {% for message in messages %}
+                {{ message }}
+            {% endfor %}</div>
+            {% endif %}
         {% else %}
             <h1>用户注册</h1>
         {% endif %}
@@ -21,7 +26,9 @@
             {% csrf_token %}
             <div>用户名:{{ user.username }}</div><div style="color:#F00">{{ user.username.errors }}</div>
             <div>密  码:{{ user.password1 }}</div><div style="color:#F00">{{ user.password1.errors }}</div>
-             {% if not user_login %}
+            {% if user_login %}
+            <div><a href="{% url 'user:find_password' %}">忘记密码?</a></div>
+            {% else %}
             <div>密码确认:{{ user.password2 }}</div><div style="color:#F00">{{ user.password2.errors }}</div>
             <div>邮  箱(用于找回密码):{{ user.email }}</div><div style="color:#F00">{{ user.email.errors }}</div>
             <div>(选填)手机号:{{ user.mobile }}</div>

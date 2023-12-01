@@ -4,11 +4,13 @@
 {% block title %}index_title{% endblock %}
 
 {% block body %}
-    {% if messages %}
+<div style="color:#F00">
+   {% if messages %}
         {% for message in messages %}
         {{ message }}
         {% endfor %}
     {% endif %}
+</div>
 {% endblock %}
 
 {% block js %}
