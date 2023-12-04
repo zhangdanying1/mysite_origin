@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from .models import Choice, Question
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import Http404
 
 
 def entry_list(request, template='polls/index.html', page_template='polls/index_page.html'):
@@ -52,3 +53,9 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def set_cookie(request):
+    if request.GET.get('id', ''):
+        raise Http404
+    return render(request, 'polls/cookie.html')
