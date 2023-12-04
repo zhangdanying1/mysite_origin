@@ -1,11 +1,12 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .models import Choice, Question
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import Http404
+from django.db.models import Q
 
 
 def entry_list(request, template='polls/index.html', page_template='polls/index_page.html'):
@@ -59,3 +60,18 @@ def set_cookie(request):
     if request.GET.get('id', ''):
         raise Http404
     return render(request, 'polls/cookie.html')
+
+
+def search(request):
+    if request.method == 'GET':
+        kword = request.session.get('kword', '')
+        if kword:
+            question_list = Question.objects.filter(Q(question_text__icontains=kword)).order_by('-pub_date').all()
+            choice_list = Choice.objects.filter(Q(choice_text__icontains=kword)).order_by('-votes').all()
+        else:
+            question_list = Question.objects.order_by('-pub_date').all()[:20]
+            choice_list = []
+        return render(request, 'polls/search.html', {'question_list': question_list, 'choice_list': choice_list})
+    else:
+        request.session['kword'] = request.POST.get('kword', '')
+        return redirect(reverse('polls:search'))

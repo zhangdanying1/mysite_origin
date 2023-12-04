@@ -21,7 +21,7 @@ class MyMiddleware(MiddlewareMixin):
             'MySign',
             'sign',
             salt=salt,
-            max_age=5
+            max_age=3600
         )
         response.set_cookie('value', salt)
         return response

@@ -11,6 +11,14 @@
         {% endfor %}
     {% endif %}
 </div>
+<br>
+<form action="{% url 'polls:search' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <input id="kword" name="kword" type="text" maxlength="120"/>
+    </div>
+    <input id="subSerch" type="submit" value="全 文 搜 索" />
+</form>
 {% endblock %}
 
 {% block js %}

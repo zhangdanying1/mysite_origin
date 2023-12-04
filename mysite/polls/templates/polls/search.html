@@ -1,0 +1,50 @@
+{% extends "base.html"  %}
+{% block title %}search{% endblock %}
+
+{% block body %}
+<br>
+<body>
+    <form action="{% url 'polls:search' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <input id="kword" name="kword" type="text" maxlength="120"/>
+        </div>
+        <input id="subSerch" type="submit" value="全 文 搜 索" />
+    </form>
+
+  <!--wrapper-->
+    <div>
+        <ul>
+            <li>问题 / 时间</li>
+        </ul>
+        <ul>
+            {% for question in question_list %}
+            <li>
+                <div>
+                    <span>
+                        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                         / {{ question.pub_date }}
+                    </span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div> -------------------------------</div>
+        <ul>
+            <li>答案 / 票数</li>
+        </ul>
+        <ul>
+            {% for choice in choice_list %}
+            <li>
+                <div>
+                    <span>
+                        <a href="{% url 'polls:detail' choice.question.id %}">{{ choice.choice_text }}</a>
+                        / {{ choice.votes }}
+                    </span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+{% endblock %}
