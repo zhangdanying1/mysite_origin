@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import reverse
 from .form import *
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
@@ -56,7 +57,7 @@ def logout_re(request):
 @login_required(login_url='/login.html')
 def change_ps(request):
     if request.method == 'POST':
-        form = MyPasswordChangeForm(request.user, data=request.POST)
+        form = PasswordChangeForm(request.user, data=request.POST)
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)   # dont logout the user.
