@@ -15,18 +15,17 @@ class MyUserCreationForm(UserCreationForm):
         # 在注册界面添加邮箱、手机号码、微信号码和QQ号码
         fields = UserCreationForm.Meta.fields
         fields += ('email', 'mobile', 'weChat', 'qq')
+        error_messages = {
+            'username': {
+                'unique': "Username Exist !!Oh.",
+            },
+        }
 
     def clean_email(self):
         email = self.cleaned_data['email']
         if MyUser.objects.filter(email=email).exists():
             raise ValidationError("Email Exist")
         return email
-
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        if MyUser.objects.filter(username=username).exists():
-            raise ValidationError("Username Exist")
-        return username
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
