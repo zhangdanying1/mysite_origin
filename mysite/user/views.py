@@ -6,11 +6,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.utils.http import urlsafe_base64_encode
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_bytes
-from django.template.loader import render_to_string
-from django.core.mail import send_mail
 from django.conf import settings
 
 
@@ -72,21 +67,10 @@ def find_ps(request):
     if request.POST:
         form = MyPasswordResetForm(request.POST)
         if form.is_valid():
-            user_email = form.cleaned_data['email']
-            user = MyUser.objects.filter(email=user_email).first()
-            subject = f"[{request.get_host()}]Password Reset Requested"
-            email_template_name = "user/password_reset_email.txt"
-            email_context = {
-                'email': user_email,
-                'user': user,
-                'domain': request.get_host(),
-                'uid': urlsafe_base64_encode(force_bytes(user.id)),
-                'token': default_token_generator.make_token(user),
-                'protocol': request.scheme,
-            }
-            body = render_to_string(email_template_name, email_context)
             try:
-                send_mail(subject, body, settings.EMAIL_HOST_USER, [user_email], fail_silently=False)
+                form.save(domain_override=request.get_host(),
+                          email_template_name="user/password_reset_email.txt",
+                          from_email=settings.EMAIL_HOST_USER, request=request)
                 messages.success(request, '重设密码的链接已经发送到您的邮箱')
             except Exception as e:
                 print(e)
