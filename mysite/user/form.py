@@ -2,9 +2,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import MyUser
 from django.contrib.auth.forms import PasswordResetForm
+from django import forms
+from captcha.fields import CaptchaField
 
 
 class MyUserCreationForm(UserCreationForm):
+    captcha = CaptchaField(error_messages={'required': u'验证码不能为空', 'invalid': u'验证码错误'})
 
     def __init__(self, *args, **kwargs):
         super(MyUserCreationForm, self).__init__(*args, **kwargs)
@@ -34,3 +37,7 @@ class MyPasswordResetForm(PasswordResetForm):
         if not MyUser.objects.filter(email=email).exists():
             raise ValidationError('Email not Exist')
         return email
+
+
+class CaptchaForm(forms.Form):
+    captcha = CaptchaField(error_messages={'required': u'验证码不能为空', 'invalid': u'验证码错误'})

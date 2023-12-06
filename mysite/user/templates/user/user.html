@@ -20,7 +20,7 @@
             <h1>用户注册</h1>
         {% endif %}
         {% if tips %}
-            <div>{{ tips }}</div>
+            <div style="color:#F00">{{ tips }}</div>
         {% endif %}
         <form class="form" action="" method="post">
             {% csrf_token %}
@@ -35,6 +35,7 @@
             <div>(选填)Q Q 号:{{ user.qq }}</div>
             <div>(选填)微信号:{{ user.weChat }}</div>
             {% endif %}
+            <div>验证码:{{ user.captcha }}</div><div style="color:#F00">{{ user.captcha.errors }}</div>(点击图片换一张)
             <button type="submit" class="btn btn-primary btn-block">提 交</button>
         </form>
     </div>
@@ -42,6 +43,27 @@
     </div>
 </div>
 </body>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+<script>
+     //点击刷新验证码
+    $(function () {
+        $('.captcha').css({
+            'cursor': 'pointer'
+        });
+        // ajax刷新
+        $('.captcha').click(function () {
+            console.log('click');
+            $.get("{% url 'captcha-refresh' %}",
+                function (result) {
+                    $('.captcha').attr('src', result['image_url']);
+                    $('#id_captcha_0').val(result['key'])
+                });
+        });
+    })
+</script>
 {% endblock %}
 
 

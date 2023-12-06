@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'polls',
     'user',
     'el_pagination',
+    'captcha',
 
     'django.contrib.sites',
     'django.contrib.flatpages',
@@ -208,6 +209,24 @@ HAYSTACK_CONNECTIONS = {
 # EMAIL_HOST_USER = '######'
 # EMAIL_HOST_PASSWORD = '######'
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Django Simple Captcha的基本配置
+# CAPTCHA_OUTPUT_FORMAT文本输入框、隐藏域和验证码图片的显示顺序
+CAPTCHA_OUTPUT_FORMAT = '%(text_field)s %(hidden_field)s %(image)s'
+# 设置图片噪点
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_null',
+                           'captcha.helpers.noise_arcs',
+                           'captcha.helpers.noise_dots', )
+# 图片大小
+CAPTCHA_IMAGE_SIZE = (100, 25)
+# 设置图片背景颜色
+CAPTCHA_BACKGROUND_COLOR = '#ffffff'
+# 图片中的文字为数字表达式
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+# 设置字符个数
+CAPTCHA_LENGTH = 4
+# 设置超时(minutes)
+CAPTCHA_TIMEOUT = 1
 
 try:
     from .local_settings import *

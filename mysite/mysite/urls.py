@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include(('user.urls', 'user'), namespace='user')),
     path('books/', include(('bookstore.urls', 'bookstore'), namespace='books')),
     path('oscar/', include(apps.get_app_config('oscar').urls[0])),
+    path('captcha/', include('captcha.urls')),
 
     re_path('media/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}, name='media'),
 ]

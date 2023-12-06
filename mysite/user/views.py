@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.http import QueryDict
 
 
 # 使用表单实现用户注册
@@ -28,13 +29,25 @@ def login_re(request):
     if request.method == 'POST':
         u = request.POST.get('username', '')
         p = request.POST.get('password1', '')
+
+        # 摘取验证码表单
+        query_dict = QueryDict(mutable=True)
+        query_dict['captcha_1'] = request.POST.get('captcha_1')
+        query_dict['captcha_0'] = request.POST.get('captcha_0')
+        captcha_form = CaptchaForm(query_dict)
+
         if MyUser.objects.filter(username=u):
             user = authenticate(username=u, password=p)
             if user:
                 if user.is_active:
-                    # 登录当前用户
-                    login(request, user)
-                return redirect(reverse('polls:index'))
+                    if captcha_form.is_valid():
+                        # 登录当前用户
+                        login(request, user)
+                        return redirect(reverse('polls:index'))
+                    else:
+                        tips = "验证码错误，请重新输入"
+                else:
+                    tips = '账号失效，请联系管理员'
             else:
                 tips = '账号密码错误，请重新输入'
         else:
