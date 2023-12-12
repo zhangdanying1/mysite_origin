@@ -21,7 +21,7 @@ class Question(models.Model):
         # bug 未发布也会返回True (delta的后半段)
         # return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
         now = timezone.now()
-        return (now - datetime.timedelta(days=1)).timestamp() <= self.pub_date <= now
+        return (now - datetime.timedelta(days=1)) <= self.pub_date <= now
 
 
 class Choice(models.Model):
