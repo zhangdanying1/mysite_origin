@@ -10,5 +10,10 @@ urlpatterns = [
     path('<int:question_id>/vote/', views.vote, name='vote'),
     path('search', views.search, name='search'),
     path('banner', views.show_banner, name='banner'),
+
+    path('task', views.runtask),
+    path('runscheduletask', views.runscheduletask),
+
+
     path('', views.set_cookie, name='set_cookie'),
 ]

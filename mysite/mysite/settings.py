@@ -231,6 +231,25 @@ CAPTCHA_TIMEOUT = 1
 # 设置轮播图显示个数
 BANNER_COUNT = 1
 
+
+# celery-redis 配置
+# 使用redis存储任务队列
+BROKER_URL = 'redis://127.0.0.1:6379/14'
+# 使用redis存储结果
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/15'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+# 结果序列化方案
+CELERY_RESULT_SERIALIZER = 'json'
+
+# 任务结果过期时间，秒
+CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
+
+# 时区配置
+CELERY_TIMEZONE = 'Asia/Shanghai'
+
+
 try:
     from .local_settings import *
 except Exception as e:

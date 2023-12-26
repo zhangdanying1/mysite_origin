@@ -81,3 +81,22 @@ def search(request):
 def show_banner(request):
     banner_list = Banner.objects.all().filter(is_delete=False, is_show=True).order_by('-orders')[:settings.BANNER_COUNT]
     return render(request, 'polls/banner.html', {'banner_list': banner_list})
+
+
+
+from django.http import JsonResponse
+from . import tasks
+# Create your views here.
+
+
+def runtask(request):
+    x = request.GET.get('x')
+    tasks.task1.delay(x)
+    content = {'200': 'run task1 success!---'+str(x)}
+    return JsonResponse(content)
+
+
+def runscheduletask(request):
+    tasks.scheduletask1.delay()
+    content = {'200': 'success！'}
+    return JsonResponse(content)
