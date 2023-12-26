@@ -228,6 +228,9 @@ CAPTCHA_LENGTH = 4
 # 设置超时(minutes)
 CAPTCHA_TIMEOUT = 1
 
+# 设置轮播图显示个数
+BANNER_COUNT = 1
+
 try:
     from .local_settings import *
 except Exception as e:

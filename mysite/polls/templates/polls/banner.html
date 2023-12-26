@@ -1,0 +1,14 @@
+{% extends "base.html"  %}
+{% block title %}banner_title{% endblock %}
+
+{% block body %}
+<body>
+
+<ul>
+{% for banner in banner_list %}
+    <li><img src="/media/{{ banner.image}}" style="height: 250px;width: 150px;">{{ banner.title}} --优先级{{ banner.orders}}</li>
+{% endfor %}
+</ul>
+
+</body>
+{% endblock %}

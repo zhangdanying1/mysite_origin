@@ -3,10 +3,11 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from .models import Choice, Question
+from .models import Choice, Question, Banner
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import Http404
 from django.db.models import Q
+from django.conf import settings
 
 
 def entry_list(request, template='polls/index.html', page_template='polls/index_page.html'):
@@ -75,3 +76,8 @@ def search(request):
     else:
         request.session['kword'] = request.POST.get('kword', '')
         return redirect(reverse('polls:search'))
+
+
+def show_banner(request):
+    banner_list = Banner.objects.all().filter(is_delete=False, is_show=True).order_by('-orders')[:settings.BANNER_COUNT]
+    return render(request, 'polls/banner.html', {'banner_list': banner_list})
