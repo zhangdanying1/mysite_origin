@@ -32,10 +32,14 @@
 *.app
 #*.txt
 .idea
-mysite/*/__pycache__
-mysite/*/migrations
+__pycache__
+
 mysite/*/local_settings.py
 mysite/db.sqlite3
+
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
 mysite/media
 venv
 cmake-build-debug
