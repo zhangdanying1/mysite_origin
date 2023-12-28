@@ -41,6 +41,8 @@ class Banner(BaseModel):
     # 前端跳转的地址： 前端路由/完整的http链接
     link = models.CharField(max_length=64, verbose_name='跳转链接')
     info = models.TextField(verbose_name='详情')  # 也可以用详情表，宽高出处
+    show_time = models.DateTimeField(default=timezone.now(), verbose_name='出现时间')
+    end_show_time = models.DateTimeField(default=timezone.now(), verbose_name='截止时间')
 
     class Meta:
         db_table = 'luffy_banner'

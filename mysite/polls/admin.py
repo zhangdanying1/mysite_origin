@@ -20,11 +20,6 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ('question_text', 'pub_date', 'was_published_recently')  # 在模型首页显示更详细关于模型的信息
 
 
-class BannerAdmin(admin.ModelAdmin):
-    list_display = ['title', 'image', 'link', 'info', 'created_time', 'updated_time', 'is_delete', 'is_show',
-                    'orders']
-
-
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice)
 admin.site.register(Banner)

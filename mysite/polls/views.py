@@ -8,6 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import Http404
 from django.db.models import Q
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import json
+from django.core import serializers
 
 
 def entry_list(request, template='polls/index.html', page_template='polls/index_page.html'):
@@ -78,25 +82,29 @@ def search(request):
         return redirect(reverse('polls:search'))
 
 
+# from django.views.decorators.csrf import csrf_exempt
+# @csrf_exempt
+# def show_banner(request):
+#     from django.utils import timezone
+#     now = timezone.now()
+#     banner_list = Banner.objects.all().filter(show_time__lte=now).order_by('-orders')[:settings.BANNER_COUNT]
+#     # banner_list = Banner.objects.all().filter(show_time__lte=now).filter(end_show_time__gte=now).order_by('-orders')[
+#     #               :settings.BANNER_COUNT]
+#     return render(request, 'polls/banner.html', {'banner_list': banner_list})
+
+
 def show_banner(request):
-    banner_list = Banner.objects.all().filter(is_delete=False, is_show=True).order_by('-orders')[:settings.BANNER_COUNT]
-    return render(request, 'polls/banner.html', {'banner_list': banner_list})
+    return render(request, 'polls/banner.html')
 
 
+@csrf_exempt
+def banner_ajax(request):
+    now = timezone.now()
+    # banner_list_query = Banner.objects.all().filter(show_time__lte=now).order_by('-orders')[:settings.BANNER_COUNT]
+    banner_list_query= Banner.objects.all().filter(show_time__lte=now).filter(end_show_time__gte=now).order_by('-orders')[
+                  :settings.BANNER_COUNT]
+    banner_list = serializers.serialize("json", banner_list_query)
+    context = {'banner_list': banner_list}
+    print(banner_list)
+    return HttpResponse(json.dumps(context))
 
-from django.http import JsonResponse
-from . import tasks
-# Create your views here.
-
-
-def runtask(request):
-    x = request.GET.get('x')
-    tasks.task1.delay(x)
-    content = {'200': 'run task1 success!---'+str(x)}
-    return JsonResponse(content)
-
-
-def runscheduletask(request):
-    tasks.scheduletask1.delay()
-    content = {'200': 'success！'}
-    return JsonResponse(content)

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from oscar.defaults import *
+# from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -248,6 +249,23 @@ CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
 
 # 时区配置
 CELERY_TIMEZONE = 'Asia/Shanghai'
+
+# CELERYBEAT_SCHEDULE = {
+#     'every_5_seconds': {
+#         # 任务路径
+#         'task': 'polls.tasks.change_pic',
+#         # 每5秒执行一次
+#         'schedule': 5,
+#         'args': ()
+#     },
+#     'every_10_seconds': {
+#         # 任务路径
+#         'task': 'polls.tasks.change_pic_back',
+#         # 每10秒执行一次
+#         'schedule': 10,
+#         'args': ()
+#     }
+# }
 
 
 try:

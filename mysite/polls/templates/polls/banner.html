@@ -3,12 +3,59 @@
 
 {% block body %}
 <body>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 
-<ul>
-{% for banner in banner_list %}
-    <li><img src="/media/{{ banner.image}}" style="height: 250px;width: 150px;">{{ banner.title}} --优先级{{ banner.orders}}</li>
-{% endfor %}
-</ul>
+{#<div id="result">#}
+{##}
+{#    {% for banner in banner_list %}#}
+{#    <li><img src="/media/{{ banner.image}}" style="height: 250px;width: 150px;">{{ banner.title}} --优先级{{ banner.orders}}</li>#}
+{#    {% endfor %}#}
+{##}
+{#</div>#}
+<div class="box"></div>
+<div >
+    <p class="show_info" id="result"></p>
+</div>
+
 
 </body>
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            function refresh(){
+              $.getJSON("/polls/banner_ajax", function (ret) {
+                var obj = JSON.parse(ret.banner_list)
+                var sum = ''
+                for (var i = 0; i < obj.length; i++) {
+                    sum = sum + '<img src="/media/'+obj[i].fields.image +'" style="height: 250px;width: 300px;">'
+                        + obj[i].fields.info + '<p>haha</p>'
+                }
+                $('#result').html(sum);
+              })
+
+            }
+            setInterval(refresh, 1000)
+         })
+    </script>
+<script>
+    const divObj = document.getElementsByClassName('box')[0];
+        setInterval(()=>{
+            const nowTime=getNowTime();
+            divObj.innerText=nowTime;
+        })
+        function getNowTime(){
+            const date=new Date();
+            const year=date.getFullYear();
+            const month=date.getMonth()+1;   //月份从0月开始算
+            const day=date.getDate();
+            const hour=date.getHours();
+            const minite=date.getMinutes();
+            const seconds=date.getSeconds();
+            return `${year}-${month}-${day} ${hour}:${minite}:${seconds<10?'0'+seconds:seconds}`
+        }
+</script>
+
 {% endblock %}

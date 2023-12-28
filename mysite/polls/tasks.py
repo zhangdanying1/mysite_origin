@@ -5,16 +5,18 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@shared_task()
-def task1(x):
-    for i in range(int(x)):
-        sleep(1)
-        logger.info('this is task1 '+str(i))
-    return x
 
-
-@shared_task
-def scheduletask1():
-    now = datetime.datetime.now()
-    logger.info('this is scheduletask '+now.strftime("%Y-%m-%d %H:%M:%S"))
-    return None
+# @shared_task
+# def change_pic():
+#     from .models import Banner
+#     from django.conf import settings
+#     banner_list = Banner.objects.all().filter(is_delete=False, is_show=True).order_by('orders')[:settings.BANNER_COUNT]
+#     return banner_list
+#
+#
+# @shared_task
+# def change_pic_back():
+#     from .models import Banner
+#     from django.conf import settings
+#     banner_list = Banner.objects.all().filter(is_delete=False, is_show=True).order_by('-orders')[:settings.BANNER_COUNT]
+#     return banner_list
