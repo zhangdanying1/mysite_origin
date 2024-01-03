@@ -30,10 +30,8 @@
     // 页面接听服务器发回的信息并处理展示
     ws.onmessage = function (event) {
         console.log('event值：' + event)
-        {#解析两次#}
-        var data_paw = JSON.parse(event.data)
-        var obj = JSON.parse(data_paw.banner_list)
-
+        {#解析一次#}
+        var obj = JSON.parse(event.data)
 
         var sum = ''
         for (var i = 0; i < obj.length; i++) {

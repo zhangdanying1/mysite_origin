@@ -26,13 +26,12 @@ class ChatConsumer(WebsocketConsumer):
             banner_list_query = Banner.objects.all().filter(show_time__lte=now).filter(end_show_time__gte=now).order_by(
                 '-orders')[:settings.BANNER_COUNT]
             banner_list = serializers.serialize("json", banner_list_query)
-            data = {"banner_list": banner_list}
             print("banner_list: ", banner_list)
 
             time.sleep(1)
             cnt += 1
             if cnt <= (settings.WS_SEND_FREQUENCY if settings.WS_SEND_FREQUENCY else 10):
-                self.send(json.dumps(data))   # 每秒服务端向client发送一次数据数据，持续时间 WS_SEND_FREQUENCY or 10s
+                self.send(banner_list)   # 每秒服务端向client发送一次数据数据，持续时间 WS_SEND_FREQUENCY or 10s
             else:
                 break
 
