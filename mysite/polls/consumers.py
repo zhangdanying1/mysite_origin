@@ -4,7 +4,6 @@ from django.core import serializers
 from django.conf import settings
 from django.utils import timezone
 from .models import Banner
-import json
 import time
 
 

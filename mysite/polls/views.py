@@ -9,8 +9,7 @@ from django.shortcuts import Http404
 from django.db.models import Q
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
-import json
+from django.http import JsonResponse
 from django.core import serializers
 
 
@@ -89,13 +88,12 @@ def show_banner(request):
 @csrf_exempt
 def banner_ajax(request):
     now = timezone.now()
-    # banner_list_query = Banner.objects.all().filter(show_time__lte=now).order_by('-orders')[:settings.BANNER_COUNT]
-    banner_list_query= Banner.objects.all().filter(show_time__lte=now).filter(end_show_time__gte=now).order_by('-orders')[
-                  :settings.BANNER_COUNT]
+    banner_list_query = Banner.objects.all().filter(show_time__lte=now).filter(end_show_time__gte=now).order_by(
+        '-orders')[:settings.BANNER_COUNT]
     banner_list = serializers.serialize("json", banner_list_query)
     context = {'banner_list': banner_list}
     print(banner_list)
-    return HttpResponse(json.dumps(context))
+    return JsonResponse(context)
 
 
 # client
