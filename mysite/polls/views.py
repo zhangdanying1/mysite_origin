@@ -82,17 +82,6 @@ def search(request):
         return redirect(reverse('polls:search'))
 
 
-# from django.views.decorators.csrf import csrf_exempt
-# @csrf_exempt
-# def show_banner(request):
-#     from django.utils import timezone
-#     now = timezone.now()
-#     banner_list = Banner.objects.all().filter(show_time__lte=now).order_by('-orders')[:settings.BANNER_COUNT]
-#     # banner_list = Banner.objects.all().filter(show_time__lte=now).filter(end_show_time__gte=now).order_by('-orders')[
-#     #               :settings.BANNER_COUNT]
-#     return render(request, 'polls/banner.html', {'banner_list': banner_list})
-
-
 def show_banner(request):
     return render(request, 'polls/banner.html')
 
@@ -108,3 +97,7 @@ def banner_ajax(request):
     print(banner_list)
     return HttpResponse(json.dumps(context))
 
+
+# client
+def show_banner_ws(request):
+    return render(request, 'polls/banner_ws.html')

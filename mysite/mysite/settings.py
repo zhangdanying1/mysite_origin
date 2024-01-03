@@ -34,12 +34,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
 
     'bookstore',
     'polls',
@@ -229,8 +231,17 @@ CAPTCHA_LENGTH = 4
 # 设置超时(minutes)
 CAPTCHA_TIMEOUT = 1
 
-# 设置轮播图显示个数
+# 轮播图显示个数
 BANNER_COUNT = 1
+
+# websocket服务端主动推送信息频率
+WS_SEND_FREQUENCY = 40
+# 配置channel
+WSGI_APPLICATION = 'mysite.wsgi.application'
+# channels使用需要添加ASGI_APPLICATION
+ASGI_APPLICATION = 'mysite.asgi.application'
+
+
 
 
 # celery-redis 配置

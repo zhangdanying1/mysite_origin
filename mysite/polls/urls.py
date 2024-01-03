@@ -9,8 +9,11 @@ urlpatterns = [
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
     path('<int:question_id>/vote/', views.vote, name='vote'),
     path('search', views.search, name='search'),
+    # ajax
     path('banner', views.show_banner, name='banner'),
     path('banner_ajax', views.banner_ajax, name='banner_ajax'),
+    # websocket
+    path('banner_ws', views.show_banner_ws, name='banner_ws'),
 
     path('', views.set_cookie, name='set_cookie'),
 ]

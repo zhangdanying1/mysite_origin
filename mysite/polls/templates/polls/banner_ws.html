@@ -1,0 +1,77 @@
+{% extends "base.html"  %}
+{% block title %}banner_ws_title{% endblock %}
+
+{% block body %}
+
+<body>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <div class="box"></div>
+
+    <div >
+        <p class="show_info" id="result"></p>
+    </div>
+</body>
+
+{% endblock %}
+
+{% block js %}
+ 
+ 
+<script>
+    var ws = new WebSocket("ws://127.0.0.1:8000/polls/socket");
+
+    //监听是否连接成功
+    ws.onopen = function () {
+        console.log('ws连接状态：' + ws.readyState);
+        //连接成功则向服务端发送一个数据
+        ws.send('to_server:ready?');
+    }
+
+    // 页面接听服务器发回的信息并处理展示
+    ws.onmessage = function (event) {
+        console.log('event值：' + event)
+        {#解析两次#}
+        var data_paw = JSON.parse(event.data)
+        var obj = JSON.parse(data_paw.banner_list)
+
+
+        var sum = ''
+        for (var i = 0; i < obj.length; i++) {
+            sum = sum + '<img src="/media/'+obj[i].fields.image +'" style="height: 250px;width: 300px;">'
+                + obj[i].fields.info + '<p>haha</p>'
+        }
+        $('#result').html(sum);
+    }
+
+    // 监听连接关闭事件
+    ws.onclose = function () {
+        // 监听整个过程中websocket的状态
+        console.log('ws连接状态：' + ws.readyState);
+    }
+
+    // 监听并处理error事件
+    ws.onerror = function (error) {
+        console.log(error);
+    }
+
+
+</script>
+    <script>
+    const divObj = document.getElementsByClassName('box')[0];
+        setInterval(()=>{
+            const nowTime=getNowTime();
+            divObj.innerText=nowTime;
+        })
+        function getNowTime(){
+            const date=new Date();
+            const year=date.getFullYear();
+            const month=date.getMonth()+1;   //月份从0月开始算
+            const day=date.getDate();
+            const hour=date.getHours();
+            const minite=date.getMinutes();
+            const seconds=date.getSeconds();
+            return `${year}-${month}-${day} ${hour}:${minite}:${seconds<10?'0'+seconds:seconds}`
+        }
+</script>
+{% endblock %}
+
