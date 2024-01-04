@@ -2,7 +2,6 @@
 {% block title %}detail_title{% endblock %}
 
 {% block body %}
-<body>
 
 <form action="{% url 'polls:vote' question.id %}" method="post">
 {% csrf_token %}
@@ -17,5 +16,4 @@
 <input type="submit" value="Vote">
 </form>
 
-</body>
 {% endblock %}
